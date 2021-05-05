@@ -21,6 +21,10 @@ func (w *Wallet) Deposit(amount Bitcoin) {
 	w.balance += amount
 }
 
+func (w *Wallet) Withdraw(amount Bitcoin) {
+	w.balance -= amount
+}
+
 // こっちはポインタにする必要はないが、慣例的に一貫性を保つため書くようにする
 func (w *Wallet) Balance() Bitcoin {
 	return w.balance
