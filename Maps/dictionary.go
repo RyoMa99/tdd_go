@@ -4,6 +4,11 @@ import "errors"
 
 type Dictionary map[string]string
 
+// map は参照型なのでポインタでなくてよい
+func (d Dictionary) Add(word, definition string) {
+	d[word] = definition
+}
+
 var ErrorNotFound = errors.New("could not find the word you were looking for")
 
 func (d Dictionary) Search(word string) (string, error) {
