@@ -2,6 +2,10 @@ package main
 
 type Dictionary map[string]string
 
+func (d Dictionary) Delete(word string) {
+	delete(d, word)
+}
+
 func (d Dictionary) Update(word, newDefinition string) error {
 	_, err := d.Search(word)
 
