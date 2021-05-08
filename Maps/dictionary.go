@@ -2,6 +2,10 @@ package main
 
 type Dictionary map[string]string
 
+func (d Dictionary) Update(word, newDefinition string) {
+	d[word] = newDefinition
+}
+
 // map は参照型なのでポインタでなくてよい
 func (d Dictionary) Add(word, definition string) error {
 	_, err := d.Search(word)
