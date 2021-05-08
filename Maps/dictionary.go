@@ -2,8 +2,19 @@ package main
 
 type Dictionary map[string]string
 
-func (d Dictionary) Update(word, newDefinition string) {
-	d[word] = newDefinition
+func (d Dictionary) Update(word, newDefinition string) error {
+	_, err := d.Search(word)
+
+	switch err {
+	case ErrorNotFound:
+		return ErrorDoesExists
+	case nil:
+		d[word] = newDefinition
+	default:
+		return err
+	}
+
+	return nil
 }
 
 // map は参照型なのでポインタでなくてよい
@@ -23,6 +34,7 @@ func (d Dictionary) Add(word, definition string) error {
 const (
 	ErrorNotFound   = DictionaryErr("could not find the word you were looking for")
 	ErrorWordExists = DictionaryErr("cannot add word becaouse it already exists")
+	ErrorDoesExists = DictionaryErr("cannot update word because it does not exist")
 )
 
 type DictionaryErr string
