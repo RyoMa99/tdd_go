@@ -7,6 +7,15 @@ import (
 	"time"
 )
 
+type ConfigurableSleeper struct {
+	duration time.Duration
+	sleep    func(time.Duration)
+}
+
+func (c *ConfigurableSleeper) Sleep() {
+	c.sleep(c.duration)
+}
+
 type Sleeper interface {
 	Sleep()
 }
@@ -33,6 +42,6 @@ func Countdown(out io.Writer, sleeper Sleeper) {
 
 func main() {
 	// io.Writerにすることでモックでも下のような標準出力でも引数にとれる
-	sleeper := &DefaultSleeper{}
+	sleeper := &ConfigurableSleeper{1 * time.Second, time.Sleep}
 	Countdown(os.Stdout, sleeper)
 }
